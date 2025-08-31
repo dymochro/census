@@ -2,7 +2,6 @@
 
 # load functions
 path <- "/Users/census/census_code/"
-path <- "/Users/fabian/Documents/Projects/Cheryn/_draft/_submission/GenomeBiology/_revisions2/census_Rcode/"
 source(paste0(path,"_getScores.R"))
 source(paste0(path,"_getMLOInfo.R"))
 source(paste0(path,"_getScaffolds.R"))
