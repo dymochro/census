@@ -1,0 +1,849 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fmodern\fcharset0 CourierNewPS-BoldMT;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red0\green0\blue0;\red217\green11\blue5;
+}
+{\*\expandedcolortbl;;\cssrgb\c1680\c19835\c100000;\cssrgb\c0\c0\c0;\cssrgb\c88946\c14202\c0;
+}
+\paperw11894\paperh16833\margl1440\margr1440\vieww26820\viewh12480\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b\fs28 \cf2 > # load functions\
+> path <- "/Users/census/census_code/"\
+> source(paste0(path,"_getScores.R"))\
+> source(paste0(path,"_getMLOInfo.R"))\
+> source(paste0(path,"_getScaffolds.R"))\
+> source(paste0(path,"_getRNAContent.R"))\
+> source(paste0(path,"_getChromVolume.R"))\
+> source(paste0(path,"_getScaffoldSizes.R"))\
+> source(paste0(path,"_getReferenceInfo.R"))\
+> source(paste0(path,"_getSurfaceDistances.R"))\
+> source(paste0(path,"_getNucleosomeContent.R"))\
+> source(paste0(path,"_getScaffoldCopyNumbers.R"))\
+> source(paste0(path,"_getScaffoldProteinContent.R"))\
+> source(paste0(path,"_getScaffoldEnrichmentsInMLOs.R"))\
+> source(paste0(path,"_getScaffoldCopyNumbersInMLOs.R"))\
+> # general information about membrane-less organelles of interest (number, diameter, volume) from literature\
+> MLO_info <- getMLOInfo()\
+> # nucleosome content of organelles of interest\
+> nucleosome_content <- getNucleosomeContent(path, MLO_info)\
+> # RNA content of organelles of interest\
+> rna_content <- getRNAContent(path, MLO_info)\
+> # proteome of organelles of interest\
+> nucleolus_gc_scaffolds <- getScaffolds("Nucleolus, GC")\cf3 \
+New names:                                                                                                                  \
+\'95 `` -> `...2`\
+\'95 `` -> `...3`\
+\'95 `` -> `...4`\
+\'95 `` -> `...5`\
+\'95 `` -> `...6`\
+\'95 `` -> `...7`\
+\'95 `` -> `...8`\
+\'95 `` -> `...9`\
+\'95 `` -> `...10`\
+\'95 `` -> `...11`\
+\'95 `` -> `...12`\
+\'95 `` -> `...13`\
+\'95 `` -> `...14`\
+\'95 `` -> `...15`\
+\cf2 > nucleolus_dfc_scaffolds <- getScaffolds("Nucleolus, DFC")\cf3 \
+New names:                                                                                                                  \
+\'95 `` -> `...2`\
+\'95 `` -> `...3`\
+\'95 `` -> `...4`\
+\'95 `` -> `...5`\
+\'95 `` -> `...6`\
+\'95 `` -> `...7`\
+\'95 `` -> `...8`\
+\'95 `` -> `...9`\
+\'95 `` -> `...10`\
+\'95 `` -> `...11`\
+\'95 `` -> `...12`\
+\'95 `` -> `...13`\
+\'95 `` -> `...14`\
+\'95 `` -> `...15`\
+\cf2 > txn_scaffolds <- getScaffolds("Txn condensate")\
+> heterochromatin_scaffolds <- getScaffolds("Heterochromatin focus")\
+> polycomb_scaffolds <- getScaffolds("Polycomb body")\
+> # protein copy numbers per cell\
+> nucleolus_gc_scaffolds[c("Number_per_cell","Number_per_cell_Err")] <- getScaffoldCopyNumbers(nucleolus_gc_scaffolds$external_gene_name, nucleosome_content=nucleosome_content)\cf3 \
+New names:                                                                                                                  \
+\'95 `Gene` -> `Gene...1`\
+\'95 `2iL` -> `2iL...2`\
+\'95 `2iL` -> `2iL...3`\
+\'95 `2iL` -> `2iL...4`\
+\'95 `SL d1` -> `SL d1...5`\
+\'95 `SL d1` -> `SL d1...6`\
+\'95 `SL d1` -> `SL d1...7`\
+\'95 `SL d3` -> `SL d3...8`\
+\'95 `SL d3` -> `SL d3...9`\
+\'95 `SL d3` -> `SL d3...10`\
+\'95 `SL d7` -> `SL d7...11`\
+\'95 `SL d7` -> `SL d7...12`\
+\'95 `SL d7` -> `SL d7...13`\
+\'95 `SL` -> `SL...14`\
+\'95 `SL` -> `SL...15`\
+\'95 `SL` -> `SL...16`\
+\'95 `EPI` -> `EPI...17`\
+\'95 `EPI` -> `EPI...18`\
+\'95 `EPI` -> `EPI...19`\
+\'95 `Gene` -> `Gene...25`\
+New names:                                                                                                                  \
+\'95 `Gene names` -> `Gene names...1`\
+\'95 `SL` -> `SL...2`\
+\'95 `SL` -> `SL...3`\
+\'95 `SL` -> `SL...4`\
+\'95 `2iLd1` -> `2iLd1...5`\
+\'95 `2iLd1` -> `2iLd1...6`\
+\'95 `2iLd1` -> `2iLd1...7`\
+\'95 `2iLd3` -> `2iLd3...8`\
+\'95 `2iLd3` -> `2iLd3...9`\
+\'95 `2iLd3` -> `2iLd3...10`\
+\'95 `2iLd7` -> `2iLd7...11`\
+\'95 `2iLd7` -> `2iLd7...12`\
+\'95 `2iLd7` -> `2iLd7...13`\
+\'95 `2iL` -> `2iL...14`\
+\'95 `2iL` -> `2iL...15`\
+\'95 `2iL` -> `2iL...16`\
+\'95 `Gene names` -> `Gene names...22`\
+New names:                                                                                                                  \
+\'95 `Gene` -> `Gene...1`\
+\'95 `2iL` -> `2iL...2`\
+\'95 `2iL` -> `2iL...3`\
+\'95 `2iL` -> `2iL...4`\
+\'95 `SL d1` -> `SL d1...5`\
+\'95 `SL d1` -> `SL d1...6`\
+\'95 `SL d1` -> `SL d1...7`\
+\'95 `SL d3` -> `SL d3...8`\
+\'95 `SL d3` -> `SL d3...9`\
+\'95 `SL d3` -> `SL d3...10`\
+\'95 `SL d7` -> `SL d7...11`\
+\'95 `SL d7` -> `SL d7...12`\
+\'95 `SL d7` -> `SL d7...13`\
+\'95 `SL` -> `SL...14`\
+\'95 `SL` -> `SL...15`\
+\'95 `SL` -> `SL...16`\
+\'95 `EPI` -> `EPI...17`\
+\'95 `EPI` -> `EPI...18`\
+\'95 `EPI` -> `EPI...19`\
+\'95 `Gene` -> `Gene...25`\
+New names:                                                                                                                  \
+\'95 `Gene names` -> `Gene names...1`\
+\'95 `SL` -> `SL...2`\
+\'95 `SL` -> `SL...3`\
+\'95 `SL` -> `SL...4`\
+\'95 `2iLd1` -> `2iLd1...5`\
+\'95 `2iLd1` -> `2iLd1...6`\
+\'95 `2iLd1` -> `2iLd1...7`\
+\'95 `2iLd3` -> `2iLd3...8`\
+\'95 `2iLd3` -> `2iLd3...9`\
+\'95 `2iLd3` -> `2iLd3...10`\
+\'95 `2iLd7` -> `2iLd7...11`\
+\'95 `2iLd7` -> `2iLd7...12`\
+\'95 `2iLd7` -> `2iLd7...13`\
+\'95 `2iL` -> `2iL...14`\
+\'95 `2iL` -> `2iL...15`\
+\'95 `2iL` -> `2iL...16`\
+\'95 `Gene names` -> `Gene names...22`\
+[1] "Undetected proteins set at minimum abundance (407):"\
+[1] "Eloa"\
+\cf2 > nucleolus_dfc_scaffolds[c("Number_per_cell","Number_per_cell_Err")] <- getScaffoldCopyNumbers(nucleolus_dfc_scaffolds$external_gene_name, nucleosome_content=nucleosome_content)\cf3 \
+New names:                                                                                                                  \
+\'95 `Gene` -> `Gene...1`\
+\'95 `2iL` -> `2iL...2`\
+\'95 `2iL` -> `2iL...3`\
+\'95 `2iL` -> `2iL...4`\
+\'95 `SL d1` -> `SL d1...5`\
+\'95 `SL d1` -> `SL d1...6`\
+\'95 `SL d1` -> `SL d1...7`\
+\'95 `SL d3` -> `SL d3...8`\
+\'95 `SL d3` -> `SL d3...9`\
+\'95 `SL d3` -> `SL d3...10`\
+\'95 `SL d7` -> `SL d7...11`\
+\'95 `SL d7` -> `SL d7...12`\
+\'95 `SL d7` -> `SL d7...13`\
+\'95 `SL` -> `SL...14`\
+\'95 `SL` -> `SL...15`\
+\'95 `SL` -> `SL...16`\
+\'95 `EPI` -> `EPI...17`\
+\'95 `EPI` -> `EPI...18`\
+\'95 `EPI` -> `EPI...19`\
+\'95 `Gene` -> `Gene...25`\
+New names:                                                                                                                  \
+\'95 `Gene names` -> `Gene names...1`\
+\'95 `SL` -> `SL...2`\
+\'95 `SL` -> `SL...3`\
+\'95 `SL` -> `SL...4`\
+\'95 `2iLd1` -> `2iLd1...5`\
+\'95 `2iLd1` -> `2iLd1...6`\
+\'95 `2iLd1` -> `2iLd1...7`\
+\'95 `2iLd3` -> `2iLd3...8`\
+\'95 `2iLd3` -> `2iLd3...9`\
+\'95 `2iLd3` -> `2iLd3...10`\
+\'95 `2iLd7` -> `2iLd7...11`\
+\'95 `2iLd7` -> `2iLd7...12`\
+\'95 `2iLd7` -> `2iLd7...13`\
+\'95 `2iL` -> `2iL...14`\
+\'95 `2iL` -> `2iL...15`\
+\'95 `2iL` -> `2iL...16`\
+\'95 `Gene names` -> `Gene names...22`\
+New names:                                                                                                                  \
+\'95 `Gene` -> `Gene...1`\
+\'95 `2iL` -> `2iL...2`\
+\'95 `2iL` -> `2iL...3`\
+\'95 `2iL` -> `2iL...4`\
+\'95 `SL d1` -> `SL d1...5`\
+\'95 `SL d1` -> `SL d1...6`\
+\'95 `SL d1` -> `SL d1...7`\
+\'95 `SL d3` -> `SL d3...8`\
+\'95 `SL d3` -> `SL d3...9`\
+\'95 `SL d3` -> `SL d3...10`\
+\'95 `SL d7` -> `SL d7...11`\
+\'95 `SL d7` -> `SL d7...12`\
+\'95 `SL d7` -> `SL d7...13`\
+\'95 `SL` -> `SL...14`\
+\'95 `SL` -> `SL...15`\
+\'95 `SL` -> `SL...16`\
+\'95 `EPI` -> `EPI...17`\
+\'95 `EPI` -> `EPI...18`\
+\'95 `EPI` -> `EPI...19`\
+\'95 `Gene` -> `Gene...25`\
+New names:                                                                                                                  \
+\'95 `Gene names` -> `Gene names...1`\
+\'95 `SL` -> `SL...2`\
+\'95 `SL` -> `SL...3`\
+\'95 `SL` -> `SL...4`\
+\'95 `2iLd1` -> `2iLd1...5`\
+\'95 `2iLd1` -> `2iLd1...6`\
+\'95 `2iLd1` -> `2iLd1...7`\
+\'95 `2iLd3` -> `2iLd3...8`\
+\'95 `2iLd3` -> `2iLd3...9`\
+\'95 `2iLd3` -> `2iLd3...10`\
+\'95 `2iLd7` -> `2iLd7...11`\
+\'95 `2iLd7` -> `2iLd7...12`\
+\'95 `2iLd7` -> `2iLd7...13`\
+\'95 `2iL` -> `2iL...14`\
+\'95 `2iL` -> `2iL...15`\
+\'95 `2iL` -> `2iL...16`\
+\'95 `Gene names` -> `Gene names...22`\
+[1] "Undetected proteins set at minimum abundance (407):"\
+[1] "Eloa"\
+\cf2 > txn_scaffolds[c("Number_per_cell","Number_per_cell_Err")] <- getScaffoldCopyNumbers(txn_scaffolds$external_gene_name, nucleosome_content=nucleosome_content)\cf3 \
+New names:                                                                                                                  \
+\'95 `Gene` -> `Gene...1`\
+\'95 `2iL` -> `2iL...2`\
+\'95 `2iL` -> `2iL...3`\
+\'95 `2iL` -> `2iL...4`\
+\'95 `SL d1` -> `SL d1...5`\
+\'95 `SL d1` -> `SL d1...6`\
+\'95 `SL d1` -> `SL d1...7`\
+\'95 `SL d3` -> `SL d3...8`\
+\'95 `SL d3` -> `SL d3...9`\
+\'95 `SL d3` -> `SL d3...10`\
+\'95 `SL d7` -> `SL d7...11`\
+\'95 `SL d7` -> `SL d7...12`\
+\'95 `SL d7` -> `SL d7...13`\
+\'95 `SL` -> `SL...14`\
+\'95 `SL` -> `SL...15`\
+\'95 `SL` -> `SL...16`\
+\'95 `EPI` -> `EPI...17`\
+\'95 `EPI` -> `EPI...18`\
+\'95 `EPI` -> `EPI...19`\
+\'95 `Gene` -> `Gene...25`\
+New names:                                                                                                                  \
+\'95 `Gene names` -> `Gene names...1`\
+\'95 `SL` -> `SL...2`\
+\'95 `SL` -> `SL...3`\
+\'95 `SL` -> `SL...4`\
+\'95 `2iLd1` -> `2iLd1...5`\
+\'95 `2iLd1` -> `2iLd1...6`\
+\'95 `2iLd1` -> `2iLd1...7`\
+\'95 `2iLd3` -> `2iLd3...8`\
+\'95 `2iLd3` -> `2iLd3...9`\
+\'95 `2iLd3` -> `2iLd3...10`\
+\'95 `2iLd7` -> `2iLd7...11`\
+\'95 `2iLd7` -> `2iLd7...12`\
+\'95 `2iLd7` -> `2iLd7...13`\
+\'95 `2iL` -> `2iL...14`\
+\'95 `2iL` -> `2iL...15`\
+\'95 `2iL` -> `2iL...16`\
+\'95 `Gene names` -> `Gene names...22`\
+New names:                                                                                                                  \
+\'95 `Gene` -> `Gene...1`\
+\'95 `2iL` -> `2iL...2`\
+\'95 `2iL` -> `2iL...3`\
+\'95 `2iL` -> `2iL...4`\
+\'95 `SL d1` -> `SL d1...5`\
+\'95 `SL d1` -> `SL d1...6`\
+\'95 `SL d1` -> `SL d1...7`\
+\'95 `SL d3` -> `SL d3...8`\
+\'95 `SL d3` -> `SL d3...9`\
+\'95 `SL d3` -> `SL d3...10`\
+\'95 `SL d7` -> `SL d7...11`\
+\'95 `SL d7` -> `SL d7...12`\
+\'95 `SL d7` -> `SL d7...13`\
+\'95 `SL` -> `SL...14`\
+\'95 `SL` -> `SL...15`\
+\'95 `SL` -> `SL...16`\
+\'95 `EPI` -> `EPI...17`\
+\'95 `EPI` -> `EPI...18`\
+\'95 `EPI` -> `EPI...19`\
+\'95 `Gene` -> `Gene...25`\
+New names:                                                                                                                  \
+\'95 `Gene names` -> `Gene names...1`\
+\'95 `SL` -> `SL...2`\
+\'95 `SL` -> `SL...3`\
+\'95 `SL` -> `SL...4`\
+\'95 `2iLd1` -> `2iLd1...5`\
+\'95 `2iLd1` -> `2iLd1...6`\
+\'95 `2iLd1` -> `2iLd1...7`\
+\'95 `2iLd3` -> `2iLd3...8`\
+\'95 `2iLd3` -> `2iLd3...9`\
+\'95 `2iLd3` -> `2iLd3...10`\
+\'95 `2iLd7` -> `2iLd7...11`\
+\'95 `2iLd7` -> `2iLd7...12`\
+\'95 `2iLd7` -> `2iLd7...13`\
+\'95 `2iL` -> `2iL...14`\
+\'95 `2iL` -> `2iL...15`\
+\'95 `2iL` -> `2iL...16`\
+\'95 `Gene names` -> `Gene names...22`\
+[1] "Undetected proteins set at minimum abundance (407):"\
+[1] "Mllt3" "Nsd2" \
+\cf2 > heterochromatin_scaffolds[c("Number_per_cell","Number_per_cell_Err")] <- getScaffoldCopyNumbers(heterochromatin_scaffolds$external_gene_name, nucleosome_content=nucleosome_content)\cf3 \
+New names:                                                                                                                  \
+\'95 `Gene` -> `Gene...1`\
+\'95 `2iL` -> `2iL...2`\
+\'95 `2iL` -> `2iL...3`\
+\'95 `2iL` -> `2iL...4`\
+\'95 `SL d1` -> `SL d1...5`\
+\'95 `SL d1` -> `SL d1...6`\
+\'95 `SL d1` -> `SL d1...7`\
+\'95 `SL d3` -> `SL d3...8`\
+\'95 `SL d3` -> `SL d3...9`\
+\'95 `SL d3` -> `SL d3...10`\
+\'95 `SL d7` -> `SL d7...11`\
+\'95 `SL d7` -> `SL d7...12`\
+\'95 `SL d7` -> `SL d7...13`\
+\'95 `SL` -> `SL...14`\
+\'95 `SL` -> `SL...15`\
+\'95 `SL` -> `SL...16`\
+\'95 `EPI` -> `EPI...17`\
+\'95 `EPI` -> `EPI...18`\
+\'95 `EPI` -> `EPI...19`\
+\'95 `Gene` -> `Gene...25`\
+New names:                                                                                                                  \
+\'95 `Gene names` -> `Gene names...1`\
+\'95 `SL` -> `SL...2`\
+\'95 `SL` -> `SL...3`\
+\'95 `SL` -> `SL...4`\
+\'95 `2iLd1` -> `2iLd1...5`\
+\'95 `2iLd1` -> `2iLd1...6`\
+\'95 `2iLd1` -> `2iLd1...7`\
+\'95 `2iLd3` -> `2iLd3...8`\
+\'95 `2iLd3` -> `2iLd3...9`\
+\'95 `2iLd3` -> `2iLd3...10`\
+\'95 `2iLd7` -> `2iLd7...11`\
+\'95 `2iLd7` -> `2iLd7...12`\
+\'95 `2iLd7` -> `2iLd7...13`\
+\'95 `2iL` -> `2iL...14`\
+\'95 `2iL` -> `2iL...15`\
+\'95 `2iL` -> `2iL...16`\
+\'95 `Gene names` -> `Gene names...22`\
+New names:                                                                                                                  \
+\'95 `Gene` -> `Gene...1`\
+\'95 `2iL` -> `2iL...2`\
+\'95 `2iL` -> `2iL...3`\
+\'95 `2iL` -> `2iL...4`\
+\'95 `SL d1` -> `SL d1...5`\
+\'95 `SL d1` -> `SL d1...6`\
+\'95 `SL d1` -> `SL d1...7`\
+\'95 `SL d3` -> `SL d3...8`\
+\'95 `SL d3` -> `SL d3...9`\
+\'95 `SL d3` -> `SL d3...10`\
+\'95 `SL d7` -> `SL d7...11`\
+\'95 `SL d7` -> `SL d7...12`\
+\'95 `SL d7` -> `SL d7...13`\
+\'95 `SL` -> `SL...14`\
+\'95 `SL` -> `SL...15`\
+\'95 `SL` -> `SL...16`\
+\'95 `EPI` -> `EPI...17`\
+\'95 `EPI` -> `EPI...18`\
+\'95 `EPI` -> `EPI...19`\
+\'95 `Gene` -> `Gene...25`\
+New names:                                                                                                                  \
+\'95 `Gene names` -> `Gene names...1`\
+\'95 `SL` -> `SL...2`\
+\'95 `SL` -> `SL...3`\
+\'95 `SL` -> `SL...4`\
+\'95 `2iLd1` -> `2iLd1...5`\
+\'95 `2iLd1` -> `2iLd1...6`\
+\'95 `2iLd1` -> `2iLd1...7`\
+\'95 `2iLd3` -> `2iLd3...8`\
+\'95 `2iLd3` -> `2iLd3...9`\
+\'95 `2iLd3` -> `2iLd3...10`\
+\'95 `2iLd7` -> `2iLd7...11`\
+\'95 `2iLd7` -> `2iLd7...12`\
+\'95 `2iLd7` -> `2iLd7...13`\
+\'95 `2iL` -> `2iL...14`\
+\'95 `2iL` -> `2iL...15`\
+\'95 `2iL` -> `2iL...16`\
+\'95 `Gene names` -> `Gene names...22`\
+[1] "Undetected proteins set at minimum abundance (407):"\
+[1] "Suv39h1" "Kmt5c"  \
+\cf2 > polycomb_scaffolds[c("Number_per_cell","Number_per_cell_Err")] <- getScaffoldCopyNumbers(polycomb_scaffolds$external_gene_name, nucleosome_content=nucleosome_content)\cf3 \
+New names:                                                                                                                  \
+\'95 `Gene` -> `Gene...1`\
+\'95 `2iL` -> `2iL...2`\
+\'95 `2iL` -> `2iL...3`\
+\'95 `2iL` -> `2iL...4`\
+\'95 `SL d1` -> `SL d1...5`\
+\'95 `SL d1` -> `SL d1...6`\
+\'95 `SL d1` -> `SL d1...7`\
+\'95 `SL d3` -> `SL d3...8`\
+\'95 `SL d3` -> `SL d3...9`\
+\'95 `SL d3` -> `SL d3...10`\
+\'95 `SL d7` -> `SL d7...11`\
+\'95 `SL d7` -> `SL d7...12`\
+\'95 `SL d7` -> `SL d7...13`\
+\'95 `SL` -> `SL...14`\
+\'95 `SL` -> `SL...15`\
+\'95 `SL` -> `SL...16`\
+\'95 `EPI` -> `EPI...17`\
+\'95 `EPI` -> `EPI...18`\
+\'95 `EPI` -> `EPI...19`\
+\'95 `Gene` -> `Gene...25`\
+New names:                                                                                                                  \
+\'95 `Gene names` -> `Gene names...1`\
+\'95 `SL` -> `SL...2`\
+\'95 `SL` -> `SL...3`\
+\'95 `SL` -> `SL...4`\
+\'95 `2iLd1` -> `2iLd1...5`\
+\'95 `2iLd1` -> `2iLd1...6`\
+\'95 `2iLd1` -> `2iLd1...7`\
+\'95 `2iLd3` -> `2iLd3...8`\
+\'95 `2iLd3` -> `2iLd3...9`\
+\'95 `2iLd3` -> `2iLd3...10`\
+\'95 `2iLd7` -> `2iLd7...11`\
+\'95 `2iLd7` -> `2iLd7...12`\
+\'95 `2iLd7` -> `2iLd7...13`\
+\'95 `2iL` -> `2iL...14`\
+\'95 `2iL` -> `2iL...15`\
+\'95 `2iL` -> `2iL...16`\
+\'95 `Gene names` -> `Gene names...22`\
+New names:                                                                                                                  \
+\'95 `Gene` -> `Gene...1`\
+\'95 `2iL` -> `2iL...2`\
+\'95 `2iL` -> `2iL...3`\
+\'95 `2iL` -> `2iL...4`\
+\'95 `SL d1` -> `SL d1...5`\
+\'95 `SL d1` -> `SL d1...6`\
+\'95 `SL d1` -> `SL d1...7`\
+\'95 `SL d3` -> `SL d3...8`\
+\'95 `SL d3` -> `SL d3...9`\
+\'95 `SL d3` -> `SL d3...10`\
+\'95 `SL d7` -> `SL d7...11`\
+\'95 `SL d7` -> `SL d7...12`\
+\'95 `SL d7` -> `SL d7...13`\
+\'95 `SL` -> `SL...14`\
+\'95 `SL` -> `SL...15`\
+\'95 `SL` -> `SL...16`\
+\'95 `EPI` -> `EPI...17`\
+\'95 `EPI` -> `EPI...18`\
+\'95 `EPI` -> `EPI...19`\
+\'95 `Gene` -> `Gene...25`\
+New names:                                                                                                                  \
+\'95 `Gene names` -> `Gene names...1`\
+\'95 `SL` -> `SL...2`\
+\'95 `SL` -> `SL...3`\
+\'95 `SL` -> `SL...4`\
+\'95 `2iLd1` -> `2iLd1...5`\
+\'95 `2iLd1` -> `2iLd1...6`\
+\'95 `2iLd1` -> `2iLd1...7`\
+\'95 `2iLd3` -> `2iLd3...8`\
+\'95 `2iLd3` -> `2iLd3...9`\
+\'95 `2iLd3` -> `2iLd3...10`\
+\'95 `2iLd7` -> `2iLd7...11`\
+\'95 `2iLd7` -> `2iLd7...12`\
+\'95 `2iLd7` -> `2iLd7...13`\
+\'95 `2iL` -> `2iL...14`\
+\'95 `2iL` -> `2iL...15`\
+\'95 `2iL` -> `2iL...16`\
+\'95 `Gene names` -> `Gene names...22`\
+[1] "Undetected proteins set at minimum abundance (407):"\
+[1] "Cbx2" "Cbx4"\
+\cf2 > # protein enrichments in organelles of interest\
+> nucleolus_gc_scaffolds[c("Enrichment_MLO","Enrichment_MLO_Err")] <- getNucleolusGCEnrichment(nucleolus_gc_scaffolds$external_gene_name)\
+> nucleolus_dfc_scaffolds[c("Enrichment_MLO","Enrichment_MLO_Err")] <- getNucleolusDFCEnrichment(nucleolus_dfc_scaffolds$external_gene_name)\
+> txn_scaffolds[c("Enrichment_MLO","Enrichment_MLO_Err")] <- getTxnEnrichment(txn_scaffolds$external_gene_name)\cf3 \
+\cf4 Linking to ImageMagick 6.9.12.93\
+Enabled features: cairo, fontconfig, freetype, heic, lcms, pango, raw, rsvg, webp\
+Disabled features: fftw, ghostscript, x11\
+Output #0, image2, to '/var/folders/xf/d3sy1yws5hq6tcsg7hjyysqw0000gs/T//RtmpbkzTUC/file75f0351e2e91/image_%6d.jpg':\
+  Metadata:\
+    encoder         : Lavf60.3.100\
+  Stream #0:0: Video: mjpeg, yuvj420p(pc), 255x302, q=2-31, 200 kb/s, 90k tbn\
+Adding frame 62 at timestamp 4.36sec (0%) - video stream completed!\cf3 \
+\cf2 > heterochromatin_scaffolds[c("Enrichment_MLO","Enrichment_MLO_Err")] <- getHeterochromatinEnrichment(heterochromatin_scaffolds$external_gene_name)\
+> polycomb_scaffolds[c("Enrichment_MLO","Enrichment_MLO_Err")] <- getPolycombEnrichment(polycomb_scaffolds$external_gene_name)\
+> # protein copy numbers in organelles of interest\
+> nucleolus_gc_scaffolds[c("Number_per_MLO","Number_per_MLO_Err")] <- getScaffoldCopyNumbersInMLOs("Nucleolus, GC", MLO_info, nucleolus_gc_scaffolds)\
+> nucleolus_dfc_scaffolds[c("Number_per_MLO","Number_per_MLO_Err")] <- getScaffoldCopyNumbersInMLOs("Nucleolus, DFC", MLO_info, nucleolus_dfc_scaffolds)\
+> txn_scaffolds[c("Number_per_MLO","Number_per_MLO_Err")] <- getScaffoldCopyNumbersInMLOs("Txn condensate", MLO_info, txn_scaffolds)\
+> heterochromatin_scaffolds[c("Number_per_MLO","Number_per_MLO_Err")] <- getScaffoldCopyNumbersInMLOs("Heterochromatin focus", MLO_info, heterochromatin_scaffolds)\
+> polycomb_scaffolds[c("Number_per_MLO","Number_per_MLO_Err")] <- getScaffoldCopyNumbersInMLOs("Polycomb body", MLO_info, polycomb_scaffolds)\
+> # scaffold protein content of organelles of interest\
+> scaffold_protein_content <- getScaffoldProteinContent(MLO_info, nucleolus_gc_scaffolds, nucleolus_dfc_scaffolds, txn_scaffolds, heterochromatin_scaffolds, polycomb_scaffolds)\cf3 \
+\
+\cf4 Attaching package: \'91seqinr\'92\
+\
+The following object is masked from \'91package:biomaRt\'92:\
+\
+    getSequence\
+\
+The following object is masked from \'91package:EBImage\'92:\
+\
+    translate\cf3 \
+\
+\cf2 > # determine protein sizes\
+> nucleolus_gc_scaffolds[c("Size_AlphaFold","Size_relaxed","Size_expanded")] <- getScaffoldSizes(nucleolus_gc_scaffolds)\cf3 \
+\
+\cf4 Attaching package: \'91bio3d\'92\
+\
+The following objects are masked from \'91package:seqinr\'92:\
+\
+    consensus, read.fasta, write.fasta\
+\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-P47962-F1-model_v1.pdb'\
+downloaded 196 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-P09405-F1-model_v1.pdb'\
+downloaded 434 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-Q61937-F1-model_v1.pdb'\
+downloaded 185 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-P70279-F1-model_v1.pdb'\
+downloaded 234 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-Q8K3Y3-F1-model_v1.pdb'\
+downloaded 130 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-Q8CB77-F1-model_v1.pdb'\
+downloaded 493 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-Q99LH1-F1-model_v1.pdb'\
+downloaded 471 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-P62751-F1-model_v1.pdb'\
+downloaded 103 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\cf3 \
+\cf2 > nucleolus_dfc_scaffolds[c("Size_AlphaFold","Size_relaxed","Size_expanded")] <- getScaffoldSizes(nucleolus_dfc_scaffolds)\cf3 \
+\cf4 trying URL 'https://alphafold.ebi.ac.uk/files/AF-P70700-F1-model_v1.pdb'\
+downloaded 722 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-P35550-F1-model_v1.pdb'\
+downloaded 196 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-Q8K3Y3-F1-model_v1.pdb'\
+Content type 'application/octet-stream' length 133811 bytes (130 KB)\
+==================================================\
+downloaded 130 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-Q8CB77-F1-model_v1.pdb'\
+downloaded 493 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\cf3 \
+\cf2 > txn_scaffolds[c("Size_AlphaFold","Size_relaxed","Size_expanded")] <- getScaffoldSizes(txn_scaffolds)\cf3 \
+\cf4 trying URL 'https://alphafold.ebi.ac.uk/files/AF-Q925J9-F1-model_v1.pdb'\
+downloaded 939 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-Q9ESU6-F1-model_v1.pdb'\
+downloaded 879 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-P08775-F1-model_v1.pdb'\
+downloaded 1.2 MB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-Q9QWV9-F1-model_v1.pdb'\
+downloaded 456 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-A2AM29-F1-model_v1.pdb'\
+downloaded 358 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-P20263-F1-model_v1.pdb'\
+downloaded 218 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-Q3TKT4-F1-model_v1.pdb'\
+downloaded 1021 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-Q8BVE8-F1-model_v1.pdb'\
+downloaded 853 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-Q99J95-F1-model_v1.pdb'\
+downloaded 243 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-Q8K2F0-F1-model_v1.pdb'\
+downloaded 451 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\cf3 \
+\cf2 > heterochromatin_scaffolds[c("Size_AlphaFold","Size_relaxed","Size_expanded")] <- getScaffoldSizes(heterochromatin_scaffolds)\cf3 \
+\cf4 trying URL 'https://alphafold.ebi.ac.uk/files/AF-Q61686-F1-model_v1.pdb'\
+downloaded 127 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-Q9Z2D6-F1-model_v1.pdb'\
+downloaded 296 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-P63280-F1-model_v1.pdb'\
+downloaded 104 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-O54864-F1-model_v1.pdb'\
+downloaded 271 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-P83917-F1-model_v1.pdb'\
+downloaded 123 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-Q62318-F1-model_v1.pdb'\
+downloaded 500 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-P52927-F1-model_v1.pdb'\
+downloaded 69 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-Q6Q783-F1-model_v1.pdb'\
+downloaded 302 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\cf3 \
+\cf2 > polycomb_scaffolds[c("Size_AlphaFold","Size_relaxed","Size_expanded")] <- getScaffoldSizes(polycomb_scaffolds)\cf3 \
+\cf4 trying URL 'https://alphafold.ebi.ac.uk/files/AF-P63280-F1-model_v1.pdb'\
+Content type 'application/octet-stream' length 107405 bytes (104 KB)\
+==================================================\
+downloaded 104 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-P30658-F1-model_v1.pdb'\
+downloaded 311 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-O55187-F1-model_v1.pdb'\
+downloaded 344 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-Q9Z172-F1-model_v1.pdb'\
+downloaded 73 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\
+trying URL 'https://alphafold.ebi.ac.uk/files/AF-Q64028-F1-model_v1.pdb'\
+downloaded 599 KB\
+\
+/opt/anaconda3/envs/intel_env/bin/mkdssp\cf3 \
+\cf2 > # calculate intermolecular distances in organelles of interest (considering one species at a time)\
+> nucleolus_gc_scaffolds[c("Distance_AlphaFold","Distance_relaxed","Distance_expanded","Distance_AlphaFold_Err","Distance_relaxed_Err","Distance_expanded_Err")] <- getOneSpeciesSurfaceDistances(MLO_info, nucleolus_gc_scaffolds, "Nucleolus, GC")\
+> nucleolus_dfc_scaffolds[c("Distance_AlphaFold","Distance_relaxed","Distance_expanded","Distance_AlphaFold_Err","Distance_relaxed_Err","Distance_expanded_Err")] <- getOneSpeciesSurfaceDistances(MLO_info, nucleolus_dfc_scaffolds, "Nucleolus, DFC")\
+> txn_scaffolds[c("Distance_AlphaFold","Distance_relaxed","Distance_expanded","Distance_AlphaFold_Err","Distance_relaxed_Err","Distance_expanded_Err")] <- getOneSpeciesSurfaceDistances(MLO_info, txn_scaffolds, "Txn condensate, small")\
+> heterochromatin_scaffolds[c("Distance_AlphaFold","Distance_relaxed","Distance_expanded","Distance_AlphaFold_Err","Distance_relaxed_Err","Distance_expanded_Err")] <- getOneSpeciesSurfaceDistances(MLO_info, heterochromatin_scaffolds, "Heterochromatin focus")\
+> polycomb_scaffolds[c("Distance_AlphaFold","Distance_relaxed","Distance_expanded","Distance_AlphaFold_Err","Distance_relaxed_Err","Distance_expanded_Err")] <- getOneSpeciesSurfaceDistances(MLO_info, polycomb_scaffolds, "Polycomb body")\
+> # adjust distances for Med1 and Polr2b in transcriptional condensates because they are part of well-known complexes\
+> # Mediator-PIC complex: Diameter of 40 nm (PMID 24550107)\
+> # RNA Pol II complex: Diameter of 15 nm (PMIDs 30575770, 40436841, 31155237)\
+> # The number of Polr2a molecules is reduced by one as the Mediator-PIC complex, which is considered separately, already includes one Polr2a\
+> txn_scaffolds_complexes <- txn_scaffolds\
+> txn_scaffolds_complexes$Size_AlphaFold[which(txn_scaffolds_complexes$external_gene_name=="Med1")] <- 40\
+> txn_scaffolds_complexes$Size_relaxed[which(txn_scaffolds_complexes$external_gene_name=="Med1")] <- 40*txn_scaffolds$Size_relaxed[which(txn_scaffolds$external_gene_name=="Med1")]/txn_scaffolds$Size_AlphaFold[which(txn_scaffolds$external_gene_name=="Med1")]\
+> txn_scaffolds_complexes$Size_expanded[which(txn_scaffolds_complexes$external_gene_name=="Med1")] <- 40*txn_scaffolds$Size_expanded[which(txn_scaffolds$external_gene_name=="Med1")]/txn_scaffolds$Size_AlphaFold[which(txn_scaffolds$external_gene_name=="Med1")]\
+> txn_scaffolds_complexes$Number_per_MLO[which(txn_scaffolds_complexes$external_gene_name=="Polr2a")] <- txn_scaffolds_complexes$Number_per_MLO[which(txn_scaffolds_complexes$external_gene_name=="Polr2a")]-1\
+> txn_scaffolds_complexes$Size_AlphaFold[which(txn_scaffolds_complexes$external_gene_name=="Polr2a")] <- 15\
+> txn_scaffolds_complexes$Size_relaxed[which(txn_scaffolds_complexes$external_gene_name=="Polr2a")] <- 15*txn_scaffolds$Size_relaxed[which(txn_scaffolds$external_gene_name=="Polr2a")]/txn_scaffolds$Size_AlphaFold[which(txn_scaffolds$external_gene_name=="Polr2a")]\
+> txn_scaffolds_complexes$Size_expanded[which(txn_scaffolds_complexes$external_gene_name=="Polr2a")] <- 15*txn_scaffolds$Size_expanded[which(txn_scaffolds$external_gene_name=="Polr2a")]/txn_scaffolds$Size_AlphaFold[which(txn_scaffolds$external_gene_name=="Polr2a")]\
+> # calculate intermolecular distances in organelles of interest (considering all species together)\
+> nucleolus_gc_distances_multi <- getMultipleSpeciesSurfaceDistances(MLO_info, nucleolus_gc_scaffolds, "Nucleolus, GC", rna_content, nucleosome_content) \
+> nucleolus_dfc_distances_multi <- getMultipleSpeciesSurfaceDistances(MLO_info, nucleolus_dfc_scaffolds, "Nucleolus, DFC", rna_content, nucleosome_content) \
+> txn_distances_multi <- getMultipleSpeciesSurfaceDistances(MLO_info, txn_scaffolds_complexes, "Txn condensate, small", rna_content, nucleosome_content) \
+> heterochromatin_distances_multi <- getMultipleSpeciesSurfaceDistances(MLO_info, heterochromatin_scaffolds, "Heterochromatin focus", rna_content, nucleosome_content) \
+> polycomb_distances_multi <- getMultipleSpeciesSurfaceDistances(MLO_info, polycomb_scaffolds, "Polycomb body", rna_content, nucleosome_content) \
+> # compute scores\
+> nucleolus_gc_scores <- getScores(nucleolus_gc_distances_multi)\
+> nucleolus_dfc_scores <- getScores(nucleolus_dfc_distances_multi)\
+> txn_scores <- getScores(txn_distances_multi)\
+> heterochromatin_scores <- getScores(heterochromatin_distances_multi)\
+> polycomb_scores <- getScores(polycomb_distances_multi)\
+> # gather data about condensates reconstituted in vitro\
+> refs <- subset(nucleolus_gc_scaffolds[nucleolus_gc_scaffolds$external_gene_name=="Npm1",], select=c("uniprotswissprot","external_gene_name","protein_sequence","Size_AlphaFold","Size_relaxed","Size_expanded"))\
+> refs <- rbind.data.frame(refs,subset(heterochromatin_scaffolds[heterochromatin_scaffolds$external_gene_name=="Cbx5",], select=c("uniprotswissprot","external_gene_name","protein_sequence","Size_AlphaFold","Size_relaxed","Size_expanded")))\cf3 \
+\cf2 > reference_scaffolds <- getReferenceInfo(refs)\
+> # display general information about MLOs (number, volume)\cf3 \
+> print.data.frame(subset(MLO_info, select=c(Organelle,Volume,Number,TotalVolume)), row.names=FALSE)\
+             Organelle       Volume Number  TotalVolume\
+             Nucleolus 4.800000e+02      1  480.0000000\
+         Nucleolus, GC 4.320000e+02      1  432.0000000\
+        Nucleolus, DFC 1.116279e+00     43   48.0000000\
+ Txn condensate, small 4.188790e-03    969    4.0589377\
+ Txn condensate, large 1.130973e-01     14    1.5833627\
+ Heterochromatin focus 4.800000e+00     10   48.0000000\
+         Polycomb body 3.648726e-02     13    0.4743344\
+           Nucleoplasm 8.400000e+02      1  840.0000000\
+               Nucleus 1.320000e+03      1 1320.0000000\
+\cf2 > # display nucleosomal content of MLOs\
+> print.data.frame(subset(nucleosome_content, select=c(Organelle,Nucleosome_number,TotalNucleosome_number)), row.names=FALSE)\cf3 \
+             Organelle Nucleosome_number TotalNucleosome_number\
+             Nucleolus      3.013146e+06             3013146.03\
+         Nucleolus, GC      2.711831e+06             2711831.43\
+        Nucleolus, DFC      7.007316e+03              301314.60\
+ Txn condensate, small      1.309371e+02              126878.04\
+ Txn condensate, large      3.535301e+03               49494.22\
+ Heterochromatin focus      1.761859e+05             1761859.25\
+         Polycomb body      1.369860e+03               17808.18\
+               Nucleus      2.934843e+07            29348433.90\
+\cf2 > # display RNA content of MLOs\
+> print.data.frame(subset(rna_content, select=c(Organelle,RNA_number,TotalRNA_number)), row.names=FALSE)\cf3 \
+             Organelle   RNA_number TotalRNA_number\
+             Nucleolus 2.177620e+05     217761.9667\
+         Nucleolus, GC 1.959858e+05     195985.7700\
+        Nucleolus, DFC 5.064232e+02      21776.1967\
+ Txn condensate, small 7.986558e+00       7738.9743\
+ Txn condensate, large 2.156371e+02       3018.9188\
+ Heterochromatin focus 6.027892e+03      60278.9203\
+         Polycomb body 3.462141e+01        450.0784\
+               Nucleus 1.029540e+06    1029540.4177\
+\cf2 > # display scaffold proteins in MLOs\
+> print.data.frame(subset(nucleolus_gc_scaffolds, select=c(uniprotswissprot,external_gene_name,Number_per_cell,Enrichment_MLO,Number_per_MLO,Size_AlphaFold,Size_relaxed,Size_expanded)), row.names=FALSE)\
+\cf3  uniprotswissprot external_gene_name Number_per_cell Enrichment_MLO Number_per_MLO Size_AlphaFold Size_relaxed Size_expanded\
+           P47962               Rpl5         6506182      17.273582   5.814283e+06       5.494104     6.298284      8.516724\
+           P09405                Ncl         6931051      10.144291   5.763236e+06       9.307793    16.792140     21.651964\
+           Q61937               Npm1        22803667       4.660456   1.582420e+07       7.462204     9.653879     12.201700\
+           P70279              Surf6          131920       5.272355   9.491506e+04       8.584617    12.871959     18.497727\
+           Q8K3Y3             Lin28a          636709       3.590694   4.049108e+05       6.378460     6.817013      9.295133\
+           Q8CB77               Eloa             407       3.744512   2.627584e+02      10.846554    19.827988     28.356560\
+           Q99LH1               Gnl2          112651            Inf   1.126510e+05       8.329177    13.231718     24.832594\
+           P62751             Rpl23a         9542514       3.755507   6.167027e+06       8.438670     8.438670      8.438670\
+\cf2 > print.data.frame(subset(nucleolus_dfc_scaffolds, select=c(uniprotswissprot,external_gene_name,Number_per_cell,Enrichment_MLO,Number_per_MLO,Size_AlphaFold,Size_relaxed,Size_expanded)), row.names=FALSE)\cf3 \
+ uniprotswissprot external_gene_name Number_per_cell Enrichment_MLO Number_per_MLO Size_AlphaFold Size_relaxed Size_expanded\
+           P70700             Polr1b           51889      19.240776     507.605009       7.267042     7.267042      7.267042\
+           P35550                Fbl         1863156       4.675987    6498.809772       5.566447     8.635999     10.036570\
+           Q8K3Y3             Lin28a          636709       3.943146    1917.899774       6.378460     6.817013      9.295133\
+           Q8CB77               Eloa             407       5.698235       1.675075      10.846554    19.827988     28.356560\
+\cf2 > print.data.frame(subset(txn_scaffolds, select=c(uniprotswissprot,external_gene_name,Number_per_cell,Enrichment_MLO,Number_per_MLO,Size_AlphaFold,Size_relaxed,Size_expanded)), row.names=FALSE)\cf3 \
+ uniprotswissprot external_gene_name Number_per_cell Enrichment_MLO Number_per_MLO Size_AlphaFold Size_relaxed Size_expanded\
+           Q925J9               Med1            7971      49.242780      1.0326337      10.836629    26.548685     41.913124\
+           Q9ESU6               Brd4           82798      10.127510      2.5610336      11.266820    26.579852     39.288667\
+           P08775             Polr2a           92668      23.110410      6.2091516       9.403972    20.403892     41.425794\
+           Q9QWV9              Ccnt1           18100       5.236321      0.2954103       8.945116    16.900090     27.355174\
+           A2AM29              Mllt3             407            Inf      0.3021529       9.971502    16.151403     22.280952\
+           P20263             Pou5f1          416624       1.517844      2.0022842       6.960446    11.808978     17.858164\
+           Q3TKT4            Smarca4          227873       1.682867      1.2133651      11.651438    21.714586     42.465307\
+           Q8BVE8               Nsd2             407            Inf      0.3021529       9.598262    20.147872     38.746353\
+           Q99J95               Cdk9          118650       1.485304      0.5580817       4.692012     6.320752      7.628092\
+           Q8K2F0               Brd3           23528       4.842134      0.3556820       9.053019    17.179525     27.396634\
+\cf2 > print.data.frame(subset(heterochromatin_scaffolds, select=c(uniprotswissprot,external_gene_name,Number_per_cell,Enrichment_MLO,Number_per_MLO,Size_AlphaFold,Size_relaxed,Size_expanded)), row.names=FALSE)\cf3 \
+ uniprotswissprot external_gene_name Number_per_cell Enrichment_MLO Number_per_MLO Size_AlphaFold Size_relaxed Size_expanded\
+           Q61686               Cbx5         1038731       3.523340   12189.857146       5.254796     7.394932     10.971763\
+           Q9Z2D6              Mecp2            2614       8.176556      61.636796       9.883452    16.711871     21.929216\
+           P63280              Ube2i         1631766       2.887976   16035.474688       3.236978     3.236978      3.236978\
+           O54864            Suv39h1             407       2.632984       3.678388       5.538654     5.538654      5.538654\
+           P83917               Cbx1          522356       7.466082   11481.902848       5.828183     7.234935      9.875070\
+           Q62318             Trim28         4167789       1.535157   22822.099645      10.569366    18.667217     29.563998\
+           P52927              Hmga2           77331       6.443521    1512.540044       9.338349     9.338349      9.624821\
+           Q6Q783              Kmt5c             407      12.531581      13.067248       6.504736    10.817655     20.733758\
+\cf2 > print.data.frame(subset(polycomb_scaffolds, select=c(uniprotswissprot,external_gene_name,Number_per_cell,Enrichment_MLO,Number_per_MLO,Size_AlphaFold,Size_relaxed,Size_expanded)), row.names=FALSE)\cf3 \
+ uniprotswissprot external_gene_name Number_per_cell Enrichment_MLO Number_per_MLO Size_AlphaFold Size_relaxed Size_expanded\
+           P63280              Ube2i         1631766       2.887976    130.1740125       3.236978     3.236978      3.236978\
+           P30658               Cbx2             407       9.578854      0.1074332       9.928844    16.649752     22.786094\
+           O55187               Cbx4             407            Inf     31.3076923       9.657445    17.166152     23.546981\
+           Q9Z172              Sumo3         5465502       1.754036    264.9221944       3.730443     3.730443      3.730443\
+           Q64028               Phc1           20041      14.286773      7.8768438      11.175329    23.930675     32.840929\
+\cf2 > # display intermolecular distances\
+> print(nucleolus_gc_distances_multi$`Distance, all proteins and RNAs`)\cf3 \
+[1] 5.984232 1.740130 0.000000\
+\cf2 > print(nucleolus_dfc_distances_multi$`Distance, all proteins and RNAs`)\cf3 \
+[1] 17.422742  3.937145  0.000000\
+\cf2 > print(txn_distances_multi$`Distance, all proteins and RNAs`)\cf3 \
+[1] 16.684357  6.144929  0.000000\
+\cf2 > print(heterochromatin_distances_multi$`Distance, all proteins and RNAs`)\cf3 \
+[1] 14.202795  7.296494  3.739821\
+\cf2 > print(polycomb_distances_multi$`Distance, all proteins and RNAs`)\cf3 \
+[1] 16.692498  8.968620  4.933241\
+\cf2 > # display scores\
+> disp_scores <- rbind.data.frame(nucleolus_gc_scores,nucleolus_dfc_scores,txn_scores,heterochromatin_scores,polycomb_scores)\
+> rownames(disp_scores) <- c("Nucleolus, GC","Nucleolus, DFC","Txn condensate, small","Heterochromatin focus","Polycomb body")\
+> colnames(disp_scores) <- c("S_Dist,p","S_Dist,pr","S_Dist,prn")\
+> print.data.frame(disp_scores)\cf3 \
+                          S_Dist,p  S_Dist,pr S_Dist,prn\
+Nucleolus, GC         0.3409411004 1.00000000  1.0000000\
+Nucleolus, DFC        0.0003255177 0.45402127  0.6196978\
+Txn condensate, small 0.0486350094 0.16643512  0.6720519\
+Heterochromatin focus 0.0128723005 0.09860943  0.3905920\
+Polycomb body         0.0017531788 0.04611370  0.2991134\
+\
+\
+\cf2 > sessionInfo()\cf3 \
+R version 4.4.3 (2025-02-28)\
+Platform: aarch64-apple-darwin20\
+Running under: macOS Sonoma 14.4.1\
+\
+Matrix products: default\
+BLAS:   /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib \
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0\
+\
+Random number generation:\
+ RNG:     Mersenne-Twister \
+ Normal:  Inversion \
+ Sample:  Rounding \
+ \
+locale:\
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8\
+\
+time zone: Europe/Berlin\
+tzcode source: internal\
+\
+attached base packages:\
+[1] stats     graphics  grDevices utils     datasets  methods   base     \
+\
+other attached packages:\
+ [1] bio3d_2.4-5     seqinr_4.2-36   magick_2.8.6    protr_1.7-4     rio_1.2.3       STRINGdb_2.18.0 xlsx_0.6.5     \
+ [8] readr_2.1.5     RCurl_1.98-1.16 biomaRt_2.62.1  EBImage_4.48.0 \
+\
+loaded via a namespace (and not attached):\
+ [1] DBI_1.2.3               bitops_1.0-9            httr2_1.1.0             readxl_1.4.5            rlang_1.1.5            \
+ [6] magrittr_2.0.3          ade4_1.7-23             av_0.9.4                compiler_4.4.3          RSQLite_2.3.9          \
+[11] png_0.1-8               fftwtools_0.9-11        vctrs_0.6.5             stringr_1.5.1           pkgconfig_2.0.3        \
+[16] crayon_1.5.3            fastmap_1.2.0           dbplyr_2.5.0            XVector_0.46.0          caTools_1.18.3         \
+[21] tzdb_0.5.0              UCSC.utils_1.2.0        purrr_1.0.4             bit_4.5.0.1             zlibbioc_1.52.0        \
+[26] cachem_1.1.0            GenomeInfoDb_1.42.3     jsonlite_1.9.0          progress_1.2.3          blob_1.2.4             \
+[31] xlsxjars_0.6.1          jpeg_0.1-11             tiff_0.1-12             parallel_4.4.3          prettyunits_1.2.0      \
+[36] R6_2.6.1                stringi_1.8.4           RColorBrewer_1.1-3      cellranger_1.1.0        Rcpp_1.0.14            \
+[41] R.utils_2.13.0          IRanges_2.40.1          splines_4.4.3           igraph_2.1.4            tidyselect_1.2.1       \
+[46] abind_1.4-8             gplots_3.2.0            curl_6.2.1              qpdf_1.3.5              lattice_0.22-6         \
+[51] tibble_3.2.1            plyr_1.8.9              Biobase_2.66.0          withr_3.0.2             KEGGREST_1.46.0        \
+[56] askpass_1.2.1           rJava_1.0-11            BiocFileCache_2.14.0    xml2_1.3.7              Biostrings_2.74.1      \
+[61] pillar_1.10.1           filelock_1.0.3          RNifti_1.8.0            KernSmooth_2.23-26      stats4_4.4.3           \
+[66] generics_0.1.3          S4Vectors_0.44.0        hms_1.1.3               chron_2.3-62            gtools_3.9.5           \
+[71] glue_1.8.0              tools_4.4.3             locfit_1.5-9.12         pdftools_3.5.0          gsubfn_0.7             \
+[76] grid_4.4.3              plotrix_3.8-4           AnnotationDbi_1.68.0    GenomeInfoDbData_1.2.13 RNiftyReg_2.8.4        \
+[81] proto_1.0.0             cli_3.6.4               rappdirs_0.3.3          sqldf_0.4-11            dplyr_1.1.4            \
+[86] R.methodsS3_1.8.2       hash_2.2.6.3            digest_0.6.37           BiocGenerics_0.52.0     htmlwidgets_1.6.4      \
+[91] memoise_2.0.1           htmltools_0.5.8.1       R.oo_1.27.0             lifecycle_1.0.4         httr_1.4.7             \
+[96] MASS_7.3-65             bit64_4.6.0-1          \
+> }
